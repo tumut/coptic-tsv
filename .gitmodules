@@ -1,0 +1,6 @@
+[submodule "tools/coptic-nt"]
+	path = tools/coptic-nt
+	url = https://github.com/tumut/coptic-nt.git
+[submodule "tools/kjv"]
+	path = tools/kjv
+	url = https://github.com/bontibon/kjv.git
