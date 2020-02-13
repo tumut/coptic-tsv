@@ -1,25 +1,29 @@
 
 UB_FOLDER ?= coptic-nt/unboundbible
-ABBREV_INDEX ?= build/abbrev-index.csv
+ABBREV_INDEX ?= bin/abbrev-index.csv
 ABBREV_SOURCE_TSV ?= kjv/kjv.tsv
 
-ALL_BUILDS = $(wildcard build/*)
 ALL_UB_FOLDERS = $(wildcard $(UB_FOLDER)/*)
 
-all: $(ALL_UB_FOLDERS:$(UB_FOLDER)/%=convert-%)
+.DEFAULT_GOAL = build
 
-build:
-	mkdir -p build
+bin:
+	mkdir -p bin
 
-$(ABBREV_INDEX): build $(ABBREV_SOURCE_TSV)
+$(ABBREV_INDEX): bin $(ABBREV_SOURCE_TSV)
 	./build_abbreviation_index.py $(ABBREV_SOURCE_TSV) -o $(ABBREV_INDEX)
 
-clean: $(ALL_BUILDS:build/%=clean-%)
+.PHONY: build
+build: $(ALL_UB_FOLDERS:$(UB_FOLDER)/%=build-%)
 
-clean-%:
-	rm -f build/$*
+.PHONY: build-%
+build-%: $(ABBREV_INDEX)
+	./to_tsv.py $(UB_FOLDER)/$* bin --abbreviation-index=$(ABBREV_INDEX)
 
-convert-%: $(ABBREV_INDEX)
-	./to_tsv.py $(UB_FOLDER)/$* build --abbreviation-index=$(ABBREV_INDEX)
+.PHONY: clean
+clean:
+	rm -f bin/*
 
-.PHONY: all  convert-%
+.PHONY: clean-%
+clean-%: bin/%.tsv
+	rm -f bin/$*.tsv
