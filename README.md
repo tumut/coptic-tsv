@@ -1,6 +1,6 @@
 # coptic-tsv ⳨
 
-TSV files of the Coptic New Testament to be used with [clb](https://github.com/tumut/clb), generated from files in the UnboundBible format. Includes the scripts used to do the generation.
+TSV files of the Coptic New Testament to be used with [clb](https://github.com/tumut/clb), generated from files in the UnboundBible format found in [coptic-nt](https://github.com/tumut/coptic-nt). Includes the scripts used to do the generation.
 
 ## Contents
 
